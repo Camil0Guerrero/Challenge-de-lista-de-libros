@@ -1,0 +1,25 @@
+/* -------------- */
+/* Botón del menu */
+/* -------------- */
+.btn-menu {
+	background-color: transparent;
+	border-radius: 50%;
+	border-color: transparent;
+	cursor: pointer;
+
+	position: fixed;
+	bottom: 1rem;
+	right: 1rem;
+	padding: 4px;
+
+	z-index: 9;
+}
+
+.btn-menu img {
+	height: 38px;
+	width: 38px;
+}
+
+.btn-menu:hover {
+	transform: scale(1.1);
+}

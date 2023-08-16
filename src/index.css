@@ -1,0 +1,40 @@
+:root {
+	font-family: 'Cascadia Code', system-ui;
+	background-color: #222133;
+	color: #00ffff;
+}
+
+h2 {
+	margin: 0;
+	padding: 1rem;
+}
+
+a {
+	font-weight: 500;
+	color: #646cff;
+	text-decoration: inherit;
+}
+a:hover {
+	color: #535bf2;
+}
+
+body {
+	margin: 0;
+	display: flex;
+	place-items: center;
+	width: 100%;
+	height: auto;
+	min-width: 320px;
+	min-height: 100vh;
+}
+
+#root {
+	max-width: 1280px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+h1 {
+	font-size: 3.2em;
+	line-height: 1.1;
+}
