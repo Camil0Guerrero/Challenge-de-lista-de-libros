@@ -8,6 +8,8 @@ interface Props {
 }
 
 function BookCard({ book, handleReadingList }: Props) {
+	if (book.inReadList) return
+
 	return (
 		<article>
 			<h3>{book.title}</h3>

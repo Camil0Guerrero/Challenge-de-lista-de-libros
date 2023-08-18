@@ -1,17 +1,21 @@
-interface HeaderProps {
-	handleFilter: (e: React.ChangeEvent<HTMLSelectElement>) => void
-	gendersList: Set<string>
-}
+import { useContext } from 'react'
+import LibraryContext from '../context/LibraryContext'
+import { LibraryContextType } from '../types'
+import './Header.css'
 
-function Header({ handleFilter, gendersList }: HeaderProps) {
+function Header() {
+	const { books, filters, booksAvailable, handleFilter, gendersList, readingList } = useContext(
+		LibraryContext
+	) as LibraryContextType
+
+	console.log(filters)
 	return (
 		<>
 			<h1>Prueba 1</h1>
 			<aside>
 				<label>
 					Géneros:{' '}
-					<select name='gender' id='gender' onChange={handleFilter}>
-						<option value=''>Sin filtro</option>
+					<select name='genre' id='gender' onChange={handleFilter}>
 						{[...gendersList].map(gender => (
 							<option key={gender} value={gender}>
 								{gender}
@@ -19,6 +23,24 @@ function Header({ handleFilter, gendersList }: HeaderProps) {
 						))}
 					</select>
 				</label>
+
+				<div className='counters'>
+					{booksAvailable === 0 ? (
+						<p className='available'>Sin libros Disponibles 😴</p>
+					) : (
+						<p className='available'>
+							Libros Disponibles: <span>{booksAvailable}</span>
+						</p>
+					)}
+					{filters?.genre.length > 0 && (
+						<p>
+							Libros de {filters?.genre} <span>{books.length}</span>
+						</p>
+					)}
+					<p className='reading-list-counter'>
+						En lista de lectura: <span>{readingList.length}</span>{' '}
+					</p>
+				</div>
 			</aside>
 		</>
 	)

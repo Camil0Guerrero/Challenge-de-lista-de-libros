@@ -22,3 +22,18 @@ export type Author = {
 	name: string
 	otherBooks: string[]
 }
+
+export type Filters = {
+	genre: string
+	pages: number
+}
+
+export type LibraryContextType = {
+	booksAvailable: number
+	books: Library[]
+	filters: Filters
+	gendersList: Set<string>
+	readingList: Library[]
+	handleFilter: (e: React.ChangeEvent<HTMLSelectElement>) => void
+	handleReadingList: (book: Book | string) => void
+}

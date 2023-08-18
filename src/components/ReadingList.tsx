@@ -1,14 +1,11 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Button from '../atoms/Button'
-import { Book, Library } from '../types'
+import { LibraryContextType } from '../types'
 import './ReadingList.css'
+import LibraryContext from '../context/LibraryContext'
 
-interface ReadingListProps {
-	readingList: Library[]
-	handleReadingList: (book: Book | string) => void
-}
-
-function ReadingList({ readingList, handleReadingList }: ReadingListProps) {
+function ReadingList() {
+	const { readingList, handleReadingList } = useContext(LibraryContext) as LibraryContextType
 	const [over, setOver] = useState(false)
 
 	const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -16,11 +13,7 @@ function ReadingList({ readingList, handleReadingList }: ReadingListProps) {
 
 		// De esta forma definimos el tipo de dato que vamos a recibir
 		const urlImage = e.dataTransfer?.getData('text/plain')
-
 		if (!urlImage) return
-
-		const bookInReadingList = readingList.find(({ book: { cover } }) => cover === urlImage)
-		if (bookInReadingList) return
 
 		handleReadingList(urlImage)
 		setOver(false)
@@ -36,13 +29,15 @@ function ReadingList({ readingList, handleReadingList }: ReadingListProps) {
 			onDrop={handleDrop}
 		>
 			<h3>{over ? 'Agregar Libro' : 'Lista de lectura'}</h3>
-			{readingList.map(({ book }) => (
-				<div key={book.ISBN}>
-					<h5>{book.title}</h5>
-					<img src={book.cover} alt={`Portada del libro ${book.title}`} />
-					<Button label='Eliminar' mode='secondary' onClick={() => handleReadingList(book)} />
-				</div>
-			))}
+			{readingList.map(({ book }) => {
+				return (
+					<div key={book.ISBN}>
+						<h5>{book.title}</h5>
+						<img src={book.cover} alt={`Portada del libro ${book.title}`} />
+						<Button label='Eliminar' mode='secondary' onClick={() => handleReadingList(book)} />
+					</div>
+				)
+			})}
 		</article>
 	)
 }

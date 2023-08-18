@@ -1,17 +1,16 @@
-import { Book, Library } from '../types'
+import { useContext } from 'react'
+import LibraryContext from '../context/LibraryContext'
+import { LibraryContextType } from '../types'
 import BookCard from './BookCard'
 
-interface BooksProps {
-	library: Library[]
-	handleReadingList: (book: Book) => void
-}
+function Books() {
+	const { books, handleReadingList } = useContext(LibraryContext) as LibraryContextType
 
-function Books({ library, handleReadingList }: BooksProps) {
 	return (
 		<>
 			<h2>Libros disponibles</h2>
 			<section className='books'>
-				{library.map(({ book }) => (
+				{books.map(({ book }) => (
 					<BookCard key={book.ISBN} book={book} handleReadingList={handleReadingList} />
 				))}
 			</section>

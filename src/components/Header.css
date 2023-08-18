@@ -1,0 +1,22 @@
+.counters {
+	padding: 1rem;
+	margin: 0;
+	font-weight: 350;
+
+	display: flex;
+	gap: 1rem;
+	justify-content: space-around;
+}
+
+.counters .available {
+	color: #00ff00;
+}
+
+.counters .reading-list-counter {
+	color: #e5ff00;
+}
+
+.counters span {
+	font-size: 1.1rem;
+	font-weight: bold;
+}
