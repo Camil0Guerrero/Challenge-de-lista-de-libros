@@ -8,23 +8,56 @@ interface Props {
 	children: React.ReactNode
 }
 
-const initialReadingList = localStorage.getItem('readingList') || '[]'
+function removeBooksFromReadingList(books: Library[], readingList: Library[]) {
+	books.forEach(book => {
+		const bookInReadingList = readingList.find(({ book: { ISBN } }) => ISBN === book.book.ISBN)
+
+		if (bookInReadingList) {
+			book.book.inReadList = true
+		} else {
+			book.book.inReadList = false
+		}
+	})
+
+	return books
+}
+
+const initialReadingList = JSON.parse(localStorage.getItem('readingList')!)
 
 const LibraryProvider: React.FC<Props> = ({ children }) => {
 	const [books, setBooks] = useState<Library[]>([])
-	const [readingList, setReadingList] = useState<Library[]>(JSON.parse(initialReadingList))
+	const [readingList, setReadingList] = useState<Library[]>(initialReadingList || [])
 	const [filters, setFilters] = useState({
 		genre: '',
 		pages: 0,
 	})
 
+	window.addEventListener('storage', () => {
+		const readingList = JSON.parse(localStorage.getItem('readingList')!) ?? []
+		setReadingList(readingList)
+
+		const newBooks = removeBooksFromReadingList(books, readingList)
+		setBooks(newBooks)
+	})
+
 	const originalBooks = useRef<Library[]>([])
 
 	useEffect(() => {
-		getBooks().then(books => {
+		const getData = async () => {
+			const books = await getBooks()
 			originalBooks.current = books.library
-			setBooks(books.library)
-		})
+
+			if (readingList.length === 0) {
+				setBooks(books.library)
+				return
+			}
+
+			// Si hay libros en la lista de lectura, agregamos la propiedad inReadList
+			const newBooks = removeBooksFromReadingList(books.library, readingList)
+			setBooks(newBooks)
+		}
+
+		getData()
 	}, [])
 
 	// Add reading list to localStorage
@@ -37,7 +70,8 @@ const LibraryProvider: React.FC<Props> = ({ children }) => {
 		if (filters?.genre.length === 0) return
 
 		const newBooks = originalBooks.current?.filter(
-			({ book }) => book.genre === filters.genre && book.pages >= filters.pages
+			({ book }) =>
+				book.genre === filters.genre && book.pages >= filters.pages && !(book.inReadList === true)
 		)
 
 		setBooks(newBooks!)
@@ -69,10 +103,11 @@ const LibraryProvider: React.FC<Props> = ({ children }) => {
 		if (typeof book === 'string') {
 			newBook = books.filter(({ book: { cover } }) => cover === book)
 		} else {
-			newBook = books.filter(({ book: { ISBN } }) => ISBN === book.ISBN)
+			// Verificamos que el libro este dentro de los libros que tenemos
+			newBook = originalBooks.current.filter(({ book: { ISBN } }) => ISBN === book.ISBN)
 		}
 
-		if (!newBook) return
+		if (!newBook || newBook.length === 0) return
 
 		const bookInReadingList = readingList.find(
 			({ book: { ISBN } }) => ISBN === newBook![0].book.ISBN

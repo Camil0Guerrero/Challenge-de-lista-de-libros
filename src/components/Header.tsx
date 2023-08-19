@@ -8,7 +8,6 @@ function Header() {
 		LibraryContext
 	) as LibraryContextType
 
-	console.log(filters)
 	return (
 		<>
 			<h1>Prueba 1</h1>
@@ -34,7 +33,7 @@ function Header() {
 					)}
 					{filters?.genre.length > 0 && (
 						<p>
-							Libros de {filters?.genre} <span>{books.length}</span>
+							Libros de {filters?.genre}: <span>{books.length}</span>
 						</p>
 					)}
 					<p className='reading-list-counter'>
