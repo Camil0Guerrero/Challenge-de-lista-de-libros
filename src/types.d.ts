@@ -37,3 +37,7 @@ export type LibraryContextType = {
 	handleFilter: (e: React.ChangeEvent<HTMLSelectElement>) => void
 	handleReadingList: (book: Book | string) => void
 }
+
+export interface ProviderProps {
+	children: React.ReactNode
+}

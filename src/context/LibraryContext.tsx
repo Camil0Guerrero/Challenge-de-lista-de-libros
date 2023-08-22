@@ -1,37 +1,21 @@
 import { createContext, useEffect, useRef, useState } from 'react'
-import { Book, Library } from '../types'
-import { getBooks } from '../services/getBooks'
+import { Book, Library, ProviderProps } from '../types'
+import { getBooks } from '../utils/functions/getBooks'
+import { removeBooksFromReadingList } from '../utils/functions/removeBooksFromReadingList'
 
 const LibraryContext = createContext({})
 
-interface Props {
-	children: React.ReactNode
-}
+const initialReadingList = JSON.parse(localStorage.getItem('readingList')!) ?? []
 
-function removeBooksFromReadingList(books: Library[], readingList: Library[]) {
-	books.forEach(book => {
-		const bookInReadingList = readingList.find(({ book: { ISBN } }) => ISBN === book.book.ISBN)
-
-		if (bookInReadingList) {
-			book.book.inReadList = true
-		} else {
-			book.book.inReadList = false
-		}
-	})
-
-	return books
-}
-
-const initialReadingList = JSON.parse(localStorage.getItem('readingList')!)
-
-const LibraryProvider: React.FC<Props> = ({ children }) => {
+const LibraryProvider: React.FC<ProviderProps> = ({ children }) => {
 	const [books, setBooks] = useState<Library[]>([])
-	const [readingList, setReadingList] = useState<Library[]>(initialReadingList || [])
+	const [readingList, setReadingList] = useState<Library[]>(initialReadingList)
 	const [filters, setFilters] = useState({
 		genre: '',
 		pages: 0,
 	})
 
+	// Este evento se ejecuta en las otras pestañas cuando se modifica el localStorage
 	window.addEventListener('storage', () => {
 		const readingList = JSON.parse(localStorage.getItem('readingList')!) ?? []
 		setReadingList(readingList)
@@ -41,6 +25,8 @@ const LibraryProvider: React.FC<Props> = ({ children }) => {
 	})
 
 	const originalBooks = useRef<Library[]>([])
+
+	const gendersList = new Set(originalBooks.current.map(({ book }) => book.genre))
 
 	useEffect(() => {
 		const getData = async () => {
@@ -121,27 +107,15 @@ const LibraryProvider: React.FC<Props> = ({ children }) => {
 		}
 
 		// Si ya esta, lo eliminamos
-		const newBooks = readingList.filter(({ book: { ISBN } }) => {
-			if (ISBN !== newBook![0].book.ISBN) return book
+		const newBooks = readingList.filter(({ book }) => {
+			if (book.ISBN !== newBook![0].book.ISBN) return book
 
-			newBook![0].book.inReadList = false
+			book.inReadList = false
 			return false
 		})
 
 		setReadingList(newBooks)
 	}
-
-	const getGenders = () => {
-		const genders = ['Todos']
-
-		originalBooks.current?.forEach(({ book }) => {
-			genders.push(book.genre)
-		})
-
-		return new Set(genders)
-	}
-
-	const gendersList = getGenders()
 
 	const data = {
 		booksAvailable,

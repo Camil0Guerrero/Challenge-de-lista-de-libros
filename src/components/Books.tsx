@@ -4,7 +4,11 @@ import { LibraryContextType } from '../types'
 import BookCard from './BookCard'
 
 function Books() {
-	const { books, handleReadingList } = useContext(LibraryContext) as LibraryContextType
+	const { books, booksAvailable, handleReadingList } = useContext(
+		LibraryContext
+	) as LibraryContextType
+
+	if (booksAvailable === 0) return
 
 	return (
 		<>

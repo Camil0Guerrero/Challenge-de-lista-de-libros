@@ -1,31 +1,27 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import Books from './components/Books'
 import ReadingList from './components/ReadingList'
 import BurgerReadList from './components/BurgerReadList'
 import Header from './components/Header'
-import LibraryContext from './context/LibraryContext'
-import { LibraryContextType } from './types'
+import { LibraryProvider } from './context/LibraryContext'
 
 function App() {
-	const { booksAvailable, readingList } = useContext(LibraryContext) as LibraryContextType
 	const [open, setOpen] = useState(false)
 
 	const handleMenu = () => {
-		if (readingList.length === 0) return
 		setOpen(!open)
 	}
 
 	return (
-		<>
+		<LibraryProvider>
 			<Header />
 			<main>
-				{open && readingList.length > 0 && <ReadingList />}
-				{booksAvailable > 0 && <Books />}
-
+				{open && <ReadingList />}
+				<Books />
 				<BurgerReadList handleMenu={handleMenu} open={open} />
 			</main>
-		</>
+		</LibraryProvider>
 	)
 }
 

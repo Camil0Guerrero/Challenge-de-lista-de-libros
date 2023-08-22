@@ -1,4 +1,4 @@
-import Button from '../atoms/Button'
+import Button from './Button'
 import { Book } from '../types'
 import './BookCard.css'
 

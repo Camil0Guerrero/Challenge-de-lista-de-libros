@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import Button from '../atoms/Button'
+import Button from './Button'
 import { LibraryContextType } from '../types'
 import './ReadingList.css'
 import LibraryContext from '../context/LibraryContext'
@@ -7,6 +7,8 @@ import LibraryContext from '../context/LibraryContext'
 function ReadingList() {
 	const { readingList, handleReadingList } = useContext(LibraryContext) as LibraryContextType
 	const [over, setOver] = useState(false)
+
+	if (readingList.length === 0) return
 
 	const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault()

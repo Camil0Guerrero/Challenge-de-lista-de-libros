@@ -4,7 +4,7 @@ import { LibraryContextType } from '../types'
 import './Header.css'
 
 function Header() {
-	const { books, filters, booksAvailable, handleFilter, gendersList, readingList } = useContext(
+	const { books, filters, booksAvailable, gendersList, handleFilter, readingList } = useContext(
 		LibraryContext
 	) as LibraryContextType
 
@@ -15,6 +15,7 @@ function Header() {
 				<label>
 					Géneros:{' '}
 					<select name='genre' id='gender' onChange={handleFilter}>
+						<option value='Todos'>Todos</option>
 						{[...gendersList].map(gender => (
 							<option key={gender} value={gender}>
 								{gender}
@@ -37,7 +38,7 @@ function Header() {
 						</p>
 					)}
 					<p className='reading-list-counter'>
-						En lista de lectura: <span>{readingList.length}</span>{' '}
+						En lista de lectura: <span>{readingList.length}</span>
 					</p>
 				</div>
 			</aside>
