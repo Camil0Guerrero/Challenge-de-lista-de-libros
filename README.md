@@ -1,27 +1,35 @@
-# React + TypeScript + Vite
+# Challenge lista de libros
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+He resuelto la primera reto de la pagina www.pruebastecnicas.com que consiste en la simulación de una lista de libros, donde se tendrá una lista de lectura que estará sincronizada entre pestañas y entre la lista de libros disponibles
 
-Currently, two official plugins are available:
+## Herramientas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Para el desarrollo de este reto se utilizo las siguientes herramientas:
 
-## Expanding the ESLint configuration
+- [React](https://es.reactjs.org/) - Librería de JavaScript para construir interfaces de usuario
+- [TypeScript](https://www.typescriptlang.org/) - Lenguaje de programación de código abierto que se basa en JavaScript
+- [Vite](https://vitejs.dev/) - Herramienta de desarrollo web que permite crear aplicaciones web modernas con React, Vue, Svelte, o JavaScript puro
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Instalación
 
-- Configure the top-level `parserOptions` property like this:
+Para instalar el proyecto se debe clonar el repositorio y ejecutar el siguiente comando en la carpeta raíz del proyecto:
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```bash
+npm install
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Ejecución
+
+Para ejecutar el proyecto se debe ejecutar el siguiente comando en la carpeta raíz del proyecto:
+
+```bash
+npm run dev
+```
+
+## Autor
+
+- [Camilo Guerrero](https://twitter.com/cristian321893)
+
+### Despliegue
+
+Esta aplicación se encuentra desplegada en GitHub Pages en el siguiente enlace: https://camil0guerrero.github.io/Challenge-de-lista-de-libros/
