@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import Button from './Button'
 import LibraryContext from '../context/LibraryContext'
 import { LibraryContextType } from '../types'
+import { booksCloseIcon, bookOpenIcon } from './BookIcons'
 
 interface BurgerReadListProps {
 	open: boolean
@@ -22,11 +23,7 @@ function BurgerReadList({ open, handleMenu }: BurgerReadListProps) {
 				handleMenu()
 			}}
 		>
-			<img
-				src={`/images/${open ? 'book-open.svg' : 'books-close.svg'}`}
-				alt='Libro abierto'
-				title='Abre la lista de lectura'
-			/>
+			{open ? bookOpenIcon() : booksCloseIcon()}
 		</Button>
 	)
 }
