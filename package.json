@@ -1,11 +1,13 @@
 {
 	"name": "01-reading-list",
+	"homepage": "https://camil0guerrero.github.io/Challenge-de-lista-de-libros/",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
+		"deploy": "gh-pages -d dist",
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"test": "vitest --watch",
 		"preview": "vite preview"
